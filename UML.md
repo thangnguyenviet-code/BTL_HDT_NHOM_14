@@ -1,3 +1,4 @@
+```mermaid
 %% Sơ đồ lớp DNU Career Connect
 ------------------------------
 User
