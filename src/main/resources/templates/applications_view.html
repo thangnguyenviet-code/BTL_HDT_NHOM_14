@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Danh sách ứng viên cho việc làm</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #fafafa; }
+        .container { max-width: 700px; margin: 32px auto; background: #fff; padding: 28px; border-radius: 8px; box-shadow: 0 0 6px #bbb; }
+        h2 { margin-bottom: 16px;}
+        table { width:100%; border-collapse: collapse; margin-top:16px;}
+        th, td { border: 1px solid #ccc; padding: 9px; text-align:left;}
+        th { background: #efefef;}
+        .no-app { color: red; font-weight: bold; padding:18px; text-align:center;}
+        .info { color: #222; margin-bottom: 7px;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Ứng viên cho công việc: <span th:text="${job.title}"></span></h2>
+        <div class="info">Nhà tuyển dụng: <span th:text="${job.employerName}"></span></div>
+        <table>
+            <tr>
+                <th>Username SV</th>
+                <th>Ngày ứng tuyển</th>
+                <th>Trình độ học vấn</th>
+                <th>Kỹ năng</th>
+            </tr>
+            <tr th:each="app : ${applications}">
+                <td th:text="${app.student.username}"></td>
+                <td th:text="${app.applyDate}"></td>
+                <td th:text="${app.student.cv != null ? app.student.cv.education : '-'}"></td>
+                <td th:text="${app.student.cv != null ? app.student.cv.skills : '-'}"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(applications)}">
+                <td colspan="4" class="no-app">Chưa có ứng viên nào ứng tuyển</td>
+            </tr>
+        </table>
+        <a href="/employer" style="display:inline-block; margin-top: 22px;">Quay lại trang nhà tuyển dụng</a>
+    </div>
+</body>
+</html>

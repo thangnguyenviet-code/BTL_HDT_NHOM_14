@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Đăng nhập DNU Career Connect</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #fafafa; }
+        .container { max-width: 400px; margin: 60px auto; background: #fff; box-shadow: 0 0 4px #bbb; padding: 32px 24px 16px 24px; border-radius: 6px; text-align: center; }
+        h2 { margin-top: 0; }
+        ul { text-align: left; margin-bottom: 24px; }
+        form label { display:block; margin:12px 0 4px 0; text-align:left;}
+        input[type="text"], input[type="password"] { width: 100%; padding:6px; box-sizing: border-box; }
+        button { margin-top:12px; padding:8px 24px; }
+        .error { color: red; margin-top: 12px;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Đăng nhập</h2>
+        <p style="text-align:left;">Tài khoản mẫu:</p>
+        <ul>
+            <li>Sinh viên: sv1 / 123</li>
+            <li>Sinh viên 2: sv2 / 123</li>
+            <li>Nhà tuyển dụng: ntd1 / 123</li>
+            <li>Admin: admin / admin</li>
+        </ul>
+        <form method="post" action="/login">
+            <label>Tên đăng nhập:</label>
+            <input name="username" required /><br>
+            <label>Mật khẩu:</label>
+            <input type="password" name="password" required /><br>
+            <button type="submit">Đăng nhập</button>
+        </form>
+        <p th:if="${error}" th:text="${error}" class="error"></p>
+    </div>
+</body>
+</html>

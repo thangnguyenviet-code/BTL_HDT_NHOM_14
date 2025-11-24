@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nhà tuyển dụng | DNU Career Connect</title>
+</head>
+<body>
+    <h2>Xin chào nhà tuyển dụng <span th:text="${username}"></span>!</h2>
+    <ul>
+        <li><a href="/addjob_form">Đăng tin tuyển dụng mới</a></li>
+    </ul>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Tiêu đề</th>
+            <th>Mô tả</th>
+            <th>Nhà tuyển dụng</th>
+        </tr>
+        <tr th:each="job : ${jobs}">
+            <td th:text="${job.id}"></td>
+            <td th:text="${job.title}"></td>
+            <td th:text="${job.description}"></td>
+            <td th:text="${job.employerName}"></td>
+            <td>
+            <a th:href="@{/employer/job/{id}/applications(id=${job.id})}">Xem ứng viên</a>
+            </td>
+        </tr>
+    </table>
+    <a href="/logout">Đăng xuất</a>
+</body>
+</html>
+

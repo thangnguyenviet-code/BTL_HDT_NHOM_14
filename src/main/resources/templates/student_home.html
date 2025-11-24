@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sinh viên | DNU Career Connect</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #fafafa; }
+        .container { max-width: 850px; margin: 60px auto; background: #fff; box-shadow: 0 0 5px #ddd; padding: 28px; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 18px;}
+        th, td { border: 1px solid #ccc; padding: 9px; text-align: left;}
+        th { background: #efefef;}
+        .msg { margin: 16px 0; font-weight: bold; color: green; }
+        .err { margin: 16px 0; font-weight: bold; color: #c00; }
+        .cv-card { border:1px solid #ddd; background:#fcfcfc; border-radius:10px; box-shadow:0 0 4px #eee; padding:20px 24px 16px 24px; margin:28px 0; }
+        .cv-header { display: flex; align-items: center; gap: 24px;}
+        .cv-avatar { width:110px; height:110px; border-radius:12px; border:1px solid #aaa; object-fit:cover;}
+        .cv-body { margin-top:12px;}
+        .cv-label { font-weight:bold; width:170px; display: inline-block;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Xin chào <span th:text="${user.username}"></span>!</h2>
+        <ul>
+            <li><a href="/cv">Tạo/Cập nhật hồ sơ CV</a></li>
+            <li><a href="/logout">Đăng xuất</a></li>
+        </ul>
+
+        <div th:if="${msg}" class="msg" th:text="${msg}"></div>
+        <div th:if="${error}" class="err" th:text="${error}"></div>
+
+        <!-- Hiển thị khung CV chuyên nghiệp -->
+        <div th:if="${user.cv != null}" class="cv-card">
+            <div class="cv-header">
+                <img th:src="${user.cv.imageUrl}" class="cv-avatar" th:alt="'Ảnh đại diện của ' + ${user.username}"/>
+                <div>
+                    <div><span class="cv-label">Email:</span> <span th:text="${user.cv.email}"></span></div>
+                    <div><span class="cv-label">Số điện thoại:</span> <span th:text="${user.cv.phone}"></span></div>
+                </div>
+            </div>
+            <div class="cv-body">
+                <div><span class="cv-label">Trình độ học vấn:</span> <span th:text="${user.cv.education}"></span></div>
+                <div><span class="cv-label">Kỹ năng:</span> <span th:text="${user.cv.skills}"></span></div>
+            </div>
+        </div>
+        <div th:if="${user.cv == null}">
+            <p>Bạn chưa có CV! <a href="/cv">Tạo ngay</a></p>
+        </div>
+
+        <h3>Danh sách việc làm:</h3>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Tiêu đề</th>
+                <th>Mô tả</th>
+                <th>Nhà tuyển dụng</th>
+                <th>Ứng tuyển</th>
+            </tr>
+            <tr th:each="job : ${jobs}">
+                <td th:text="${job.id}"></td>
+                <td th:text="${job.title}"></td>
+                <td th:text="${job.description}"></td>
+                <td th:text="${job.employerName}"></td>
+                <td>
+                    <span th:if="${job.applications.?[student.username==user.username]?.size() > 0}" style="color:green;font-weight:bold;">Đã ứng tuyển</span>
+                    <form th:if="${job.applications.?[student.username==user.username]?.size() == 0}" th:action="@{/apply/{id}(id=${job.id})}" method="post" style="margin:0;">
+                        <button type="submit" th:disabled="${user.cv == null}">Ứng tuyển</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

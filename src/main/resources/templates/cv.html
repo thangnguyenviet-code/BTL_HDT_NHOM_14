@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tạo/Chỉnh sửa CV</title>
+    <style>
+        .cv-form { max-width: 420px; margin: 60px auto; background: #fff; padding: 24px; border-radius: 6px; box-shadow: 0 0 8px #ccc;}
+        label { display: block; margin-top: 12px; margin-bottom: 4px; }
+        input[type="text"], input[type="email"], input[type="file"] { width: 100%; padding:6px; box-sizing: border-box; }
+        .preview-img { width: 120px; margin:10px 0; border-radius:8px; border:1px solid #999;}
+    </style>
+</head>
+<body>
+    <div class="cv-form">
+        <h2>Tạo/Chỉnh sửa CV</h2>
+        <form method="post" action="/cv" enctype="multipart/form-data">
+            <label>Ảnh đại diện:</label>
+            <input type="file" name="avatarFile" />
+            <div th:if="${cv != null && cv.imageUrl != null && cv.imageUrl != ''}">
+                <img th:src="@{${cv.imageUrl}}" class="preview-img"/>
+            </div>
+            <label>Email:</label>
+            <input type="email" name="email" th:value="${cv != null ? cv.email : ''}" required />
+            <label>Số điện thoại:</label>
+            <input type="text" name="phone" th:value="${cv != null ? cv.phone : ''}" required />
+            <label>Trình độ học vấn:</label>
+            <input type="text" name="education" th:value="${cv != null ? cv.education : ''}" required />
+            <label>Kỹ năng:</label>
+            <input type="text" name="skills" th:value="${cv != null ? cv.skills : ''}" required />
+            <button type="submit" style="margin-top:18px;">Lưu CV</button>
+        </form>
+        <a href="/student">Quay về trang sinh viên</a>
+    </div>
+</body>
+</html>

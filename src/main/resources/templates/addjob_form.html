@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Thêm bài tuyển dụng mới</title></head>
+<body>
+    <h2>Thêm bài tuyển dụng mới</h2>
+    <form th:action="@{/addjob}" method="post">
+        <label>Tiêu đề:</label>
+        <input type="text" name="title" required /><br>
+        <label>Mô tả:</label>
+        <input type="text" name="description" required /><br>
+        <label>Tên nhà tuyển dụng:</label>
+        <input type="text" name="employer" required /><br>
+        <button type="submit">Thêm</button>
+    </form>
+    <a href="/employer">Quay lại trang nhà tuyển dụng</a>
+</body>
+</html>

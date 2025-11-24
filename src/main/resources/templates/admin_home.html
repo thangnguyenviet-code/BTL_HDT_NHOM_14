@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Quản trị | DNU Career Connect</title></head>
+<body>
+    <h2>Xin chào <span th:text="${username}"></span>!</h2>
+    <h3>Danh sách bài tuyển dụng:</h3>
+    <table border="1">
+        <tr><th>ID</th><th>Tiêu đề</th><th>Nhà tuyển dụng</th><th>Mô tả</th><th>Xóa</th></tr>
+        <tr th:each="job : ${jobs}">
+            <td th:text="${job.id}"></td>
+            <td th:text="${job.title}"></td>
+            <td th:text="${job.employerName}"></td>
+            <td th:text="${job.description}"></td>
+            <td>
+                <form th:action="@{/admin/deletejob}" method="post">
+                    <input type="hidden" name="jobId" th:value="${job.id}" />
+                    <button type="submit" onclick="return confirm('Xóa bài tuyển dụng này?')">Xóa</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <a href="/logout">Đăng xuất</a>
+</body>
+</html>
